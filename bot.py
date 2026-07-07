@@ -222,7 +222,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 async def check_reminders(context: ContextTypes.DEFAULT_TYPE):
-    now = get_ist_time()
+    now = datetime.now()
     for user_id, events in events_db.items():
         for event in events:
             for reminder_min in [1440, 120, 15]:
