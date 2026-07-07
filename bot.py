@@ -8,6 +8,23 @@ from datetime import datetime, timedelta
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
+from datetime import datetime, timedelta
+import pytz  # You'll need to add this to requirements.txt
+
+# Set IST timezone
+IST = pytz.timezone('Asia/Kolkata')
+UTC = pytz.utc
+
+def get_ist_time():
+    """Get current time in IST"""
+    return datetime.now(IST)
+
+def convert_to_ist(utc_time):
+    """Convert UTC time to IST"""
+    if utc_time.tzinfo is None:
+        utc_time = pytz.utc.localize(utc_time)
+    return utc_time.astimezone(IST)
+
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 # Simple storage
