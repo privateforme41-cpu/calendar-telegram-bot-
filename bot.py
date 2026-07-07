@@ -17,7 +17,7 @@ UTC = pytz.utc
 
 def get_ist_time():
     """Get current time in IST"""
-    return get_ist_time(IST)
+    return datetime.now(IST)
 
 def convert_to_ist(utc_time):
     """Convert UTC time to IST"""
