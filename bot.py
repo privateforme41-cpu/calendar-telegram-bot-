@@ -17,7 +17,7 @@ UTC = pytz.utc
 
 def get_ist_time():
     """Get current time in IST"""
-    return datetime.now(IST)
+    return get_ist_time(IST)
 
 def convert_to_ist(utc_time):
     """Convert UTC time to IST"""
@@ -67,9 +67,9 @@ def parse_message(message):
             title = "Dinner"
         
         # Extract date
-        date = datetime.now().date()
+        date = get_ist_time().date()
         if "tomorrow" in msg_lower:
-            date = (datetime.now() + timedelta(days=1)).date()
+            date = (get_ist_time() + timedelta(days=1)).date()
         
         # Extract time
         time_match = re.search(r"(\d{1,2}):(\d{2})", msg_lower)
@@ -148,7 +148,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def today_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.effective_user.id)
-    today_start = datetime.now().replace(hour=0, minute=0, second=0)
+    today_start = get_time_now().replace(hour=0, minute=0, second=0)
     today_end = today_start + timedelta(days=1)
     
     user_events = [e for e in get_events(user_id) 
@@ -222,7 +222,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 async def check_reminders(context: ContextTypes.DEFAULT_TYPE):
-    now = datetime.now()
+    now = get_ist_time()
     for user_id, events in events_db.items():
         for event in events:
             for reminder_min in [1440, 120, 15]:
